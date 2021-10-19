@@ -86,7 +86,7 @@ Will render:
 
 Path variables can only be composed of alphanumeric characters and hyphens.
 
-## Path not found
+### Path not found
 
 When a path is not found in your configuration the custom router will throw an Error. You can catch this error and handle it however you want. Here is an example where we alert the user they've tried to request a route that doesn't exist.
 
