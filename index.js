@@ -88,7 +88,7 @@ export class RouterElement extends HTMLElement {
     }
   }
 
-  render() {
+  async render() {
     const route = this.indexedRoutes.find((indexedRoute) =>
       indexedRoute.regex.test(this.currentPath)
     );
@@ -100,14 +100,14 @@ export class RouterElement extends HTMLElement {
     this.previousRoute = route;
     const variables = getVariables(this.currentPath, route);
     const template = document.createElement('template');
-    const element = document.createElement(route.component);
-    variables.forEach(({ name, value }) => {
-      element.setAttribute(name, value);
-    });
-    const temporaryShell = document.createElement('div');
-    temporaryShell.appendChild(element);
-    template.innerHTML = temporaryShell.innerHTML;
-    this.innerHTML = '';
-    this.appendChild(template.content.cloneNode(true));
+    try {
+      template.innerHTML = await route.go({
+        variables,
+      });
+      this.innerHTML = '';
+      this.appendChild(template.content.cloneNode(true));
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 }

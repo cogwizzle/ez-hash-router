@@ -10,7 +10,7 @@ npm i --save ez-hash-router
 
 ## Basic Usage
 
-You have to create a router element by extending the RouterElement base class. You can then insert your routes into the router element and
+You have to create a router element by extending the RouterElement base class. You can then insert your routes into the router element and it will take care fo the rest.
 
 my-custom-router.js
 
@@ -33,7 +33,7 @@ export class MyCustomRouter extends RouterElement {
     this.routes = [
       {
         "path": "", // Path to the base route.
-        "component": "my-hello-world" // Point the route at your component to render at a certain route.
+        "go": () => `<my-hello-world></my-hello-world>` // Template you wish to render.
       }
     ];
     super.connectedCallback(); // Run the connected callback of the RouterElement.
@@ -68,7 +68,11 @@ This route:
 ```JavaScript
 {
   path: '/blog/{post-id}',
-  component: 'my-blog-post'
+  go: ({ variables }) => {
+    return `
+      <my-blog-post post-id="${variables[post-id]}"></my-blog-post>
+    `;
+  }
 }
 ```
 
