@@ -70,7 +70,7 @@ This route:
   path: '/blog/{post-id}',
   go: ({ variables }) => {
     return `
-      <my-blog-post post-id="${variables[post-id]}"></my-blog-post>
+      <my-blog-post post-id="${variables['post-id']}"></my-blog-post>
     `;
   }
 }
@@ -92,15 +92,26 @@ Path variables can only be composed of alphanumeric characters and hyphens.
 
 ### Path not found
 
-When a path is not found in your configuration the custom router will throw an Error. You can catch this error and handle it however you want. Here is an example where we alert the user they've tried to request a route that doesn't exist.
+When you try to reach a route that is not defined, the router will render a notFound message. You can customize this message by creating your own custom notFound function and setting this.innerHTML to the template you desire.
 
-```HTML
-<my-custom-router></my-custom-router>
-<script>
-  document.querySelector('my-custom-router').addEventListener('route-not-found', (e) => {
-    alert(`Route not found!`);
-  });
-</script>
+```JavaScript
+class MyRouter extends RouterElement {
+  constructor() {
+    super();
+  }
+
+  notFound() {
+    this.innerHTML = `Oh no! We couldn't find that page.`;
+  }
+
+  connectedCallback() {
+    this.routes = [
+      {
+        path: '/',
+        go: () => `<my-home-page></my-home-page>`
+      }
+    ];
+    super.connectedCallback();
+  }
+}
 ```
-
-This is designed so that the user has some flexibility on how they want to handle the route.
