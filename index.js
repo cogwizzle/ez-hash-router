@@ -69,6 +69,15 @@ export class RouterElement extends HTMLElement {
     }
   }
 
+  notFound() {
+    this.innerHTML = `
+      <h1>Unable to find page</h1>
+      <div>
+        I'm sorry the page you're looking for was unable to be found.
+      </div>
+    `;
+  }
+
   connectedCallback() {
     this.indexRoutes();
     this.currentPath =
@@ -93,7 +102,7 @@ export class RouterElement extends HTMLElement {
       indexedRoute.regex.test(this.currentPath)
     );
     if (!route || (route.path === '' && this.currentPath !== '')) {
-      this.dispatchEvent(new Event('route-not-found'));
+      this.notFound();
       return;
     }
     if (this.previousRoute && route.path === this.previousRoute.path) return;
