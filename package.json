@@ -1,6 +1,6 @@
 {
   "name": "ez-hash-router",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Lightweight hash router custom element.",
   "main": "index.js",
   "scripts": {
