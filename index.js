@@ -105,8 +105,6 @@ export class RouterElement extends HTMLElement {
       this.notFound();
       return;
     }
-    if (this.previousRoute && route.path === this.previousRoute.path) return;
-    this.previousRoute = route;
     const variables = getVariables(this.currentPath, route);
     const template = document.createElement('template');
     try {
